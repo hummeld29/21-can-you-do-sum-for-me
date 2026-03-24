@@ -19,7 +19,6 @@ def create_deck():
     return deck
 
 deck = create_deck()
-print(deck)
 
 
 def shuffle_deck(deck):
@@ -28,11 +27,28 @@ def shuffle_deck(deck):
 
 
 def deal_card(deck):
-    """Removes and returns the top card from the deck."""
-    # TODO: Return a card and handle the edge case of an empty deck
-    pass
+
+    deck.pop(0) 
+
+card1 = deal_card(deck)
+card2 = deal_card(deck)
+hand = [ card1, card2]
 
 def calculate_score(hand):
+        score = 0
+        for card in hand:
+            rank = card[0]
+            value  = card[1]
+            score += values[rank]
+        if "Ace" in hand and score > 21:
+            score -= 10
+        return score 
+
+
+
+
+
+
     """
     Calculates the total value of cards in a hand.
     Requirement: If the score is over 21 and the hand contains an Ace, 
