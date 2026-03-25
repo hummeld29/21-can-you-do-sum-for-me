@@ -1,7 +1,3 @@
-
-
-
-
 import random
 # Global Configurations
 suits = ["Hearts", "Diamonds", "Clubs", "Spades"]
@@ -55,17 +51,47 @@ def calculate_score(hand):
     reduce the score by 10 until the score is <= 21 or no Aces remain.
     """
     # TODO: Implement scoring logic and Ace adjustment
-    pass
 
 def show_hand(player_name, hand, hide_first_card=False):
+ print( f"{player_name}'s hand: , score is {calculate_score(hand)}")
+
+ 
+
  """Prints the formatted hand and current score for the user."""
     # TODO: Print cards. If hide_first_card is True, obscure the first card.
 pass
 
 def play_game():
+    deck = create_deck()
+        shuffle_deck(deck)
+        card1 = deal_card(deck)
+        card2 = deal_card(deck)
+        hand = calculate_score([card1, card2])
+        dealer_card1 = deal_card(deck)
+        dealer_card2 = deal_card(deck)
+        dealer_hand = [dealer_card1, dealer_card2]
+        dealer_score = calculate_score(dealer_hand)
+    while True:
+        show_hand("your", hand)
+        print(f"dealer's hand: {dealer_card1} and a hidden card" )
+            if hand > 21:
+                print("you busted. dealer wins the round.")
+                continue
+            elif hand == 21:
+                print("blackjack u win")
+                continue
+            else:
+                
+        
+
+
+
+
+
+
     """Main game loop managing turns, user input, and winner logic."""
     # TODO: Implement game flow
-    pass
+
 
 if __name__ == "__main__":
     play_game()
