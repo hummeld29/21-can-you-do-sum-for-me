@@ -34,10 +34,12 @@ def calculate_score(hand):
         score = 0
         for card in hand:
             rank = card[0]
-            value  = card[1]
-            score += values[rank]
-        if "Ace" in hand and score > 21:
+            value  += value[card]
+            if rank == "Ace":
+                acecout += 1
+        while score > 21 and ace_count > 0:
             score -= 10
+            ace_count -= 1
         return score 
 
 
@@ -45,8 +47,8 @@ def calculate_score(hand):
 
 
 
-    """
-    Calculates the total value of cards in a hand.
+"""
+    #Calculates the total value of cards in a hand.
     Requirement: If the score is over 21 and the hand contains an Ace, 
     reduce the score by 10 until the score is <= 21 or no Aces remain.
     """
@@ -63,24 +65,45 @@ pass
 
 def play_game():
     deck = create_deck()
-        shuffle_deck(deck)
-        card1 = deal_card(deck)
-        card2 = deal_card(deck)
-        hand = calculate_score([card1, card2])
-        dealer_card1 = deal_card(deck)
-        dealer_card2 = deal_card(deck)
-        dealer_hand = [dealer_card1, dealer_card2]
-        dealer_score = calculate_score(dealer_hand)
+    shuffle_deck(deck)
+    card1 = deal_card(deck)
+    card2 = deal_card(deck)
+    hand = calculate_score([card1, card2])
+    dealer_card1 = deal_card(deck)
+    dealer_card2 = deal_card(deck)
+    dealer_hand = [dealer_card1, dealer_card2]
+    dealer_score = calculate_score(dealer_hand)
     while True:
         show_hand("your", hand)
         print(f"dealer's hand: {dealer_card1} and a hidden card" )
-            if hand > 21:
-                print("you busted. dealer wins the round.")
-                continue
-            elif hand == 21:
-                print("blackjack u win")
-                continue
+        if hand > 21:
+            print("you busted. dealer wins the round.")
+            continue
+        elif hand == 21:
+            print("blackjack u win")
+            continue
+        else:
+            user_input = input("type 'hit' to get another card, or 'stand' to hold your hand: ")
+            if user_input.lower() == "hit":
+                new_card = deal_card(deck)
+                hand.append(new_card)
+            elif user_input.lower() == "stand":
+                while dealer_score < 17:
+                    new_card = deal_card(deck)
+                    dealer_hand.append(new_card)
+                    dealer_score = calculate_score(dealer_hand)
+                show_hand("dealer's", dealer_hand)
+                if dealer_score > 21:
+                    print("dealer busted. you win the round.")
+                elif dealer_score > hand:
+                    print("dealer wins the round.")
+                elif dealer_score < hand:
+                    print("you win the round.")
+                else:
+                    print("it's a tie!")
+                break
             else:
+                print("invalid input. please type 'hit' or 'stand'.")   
                 
         
 
@@ -91,7 +114,4 @@ def play_game():
 
     """Main game loop managing turns, user input, and winner logic."""
     # TODO: Implement game flow
-
-
-if __name__ == "__main__":
-    play_game()
+play_game()
