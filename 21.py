@@ -105,11 +105,4 @@ def play_game():
                 else:
                     print("invalid input. please type 'hit' or 'stand'.")   
                 
-        
-
-
-
-
-
-
 play_game()
